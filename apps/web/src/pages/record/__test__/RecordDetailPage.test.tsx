@@ -9,16 +9,19 @@ import type { RecordResult } from '@/entities/record/model/record.type'
 import type { TeamKey } from '@/shared/constants/teams'
 import { recordDelete } from '@/entities/record/api/record-delete'
 import { emotionGroupList } from '@/mocks/data/record'
+import type { StadiumKey } from '@/shared/constants/stadium'
 
 import { RecordDetailPage } from '../ui/RecordDetailPage'
 
 const mockPush = vi.fn()
 const mockReplace = vi.fn()
+const mockPop = vi.fn()
 
 vi.mock('@/shared/lib/stackflow', () => ({
   useFlow: () => ({
     push: mockPush,
     replace: mockReplace,
+    pop: mockPop,
   }),
 }))
 
@@ -60,7 +63,7 @@ const mockRecordData = {
     awayTeam: 'KT_WIZ' as TeamKey,
     matchDate: '2025-07-08',
     matchTime: '21:30',
-    stadium: '잠실야구장',
+    stadium: 'JAMSIL' as StadiumKey,
     userId: 1,
     watchCnt: 4,
     result: 'DRAW' as RecordResult,
@@ -159,7 +162,7 @@ describe('RecordDetailPage', () => {
     // 비동기 작업 완료 대기
     await waitFor(() => {
       expect(toast).toHaveBeenCalledWith('관람로그 삭제가 완료되었습니다!')
-      expect(mockReplace).toHaveBeenCalledWith('Record', {}, { animate: false })
+      expect(mockPop).toHaveBeenCalled()
     })
   })
 
