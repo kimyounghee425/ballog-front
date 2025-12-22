@@ -4,20 +4,29 @@ import QueryProvider from '@/app/Provider/QueryProvider'
 import { SessionProvider } from '@/app/Provider/contexts/sessionContext'
 import { Toaster } from '@/shared/ui/common/Sonner'
 import { OverlayProvider } from '@/shared/hooks/useOverlay'
-// import { NoticeModal } from './Notice/NoticeModal'
+
+import { useUpdatePolicy } from './policy/update/useUpdatePolicy'
+
+const AppInner = () => {
+  useUpdatePolicy()
+
+  return (
+    <>
+      <Stack />
+      <Toaster position="bottom-center" />
+    </>
+  )
+}
 
 const App = () => {
   return (
-    <SessionProvider>
-      <OverlayProvider>
+    <OverlayProvider>
+      <SessionProvider>
         <QueryProvider>
-          <Stack />
-
-          {/* <NoticeModal /> */}
-          <Toaster position="bottom-center" />
+          <AppInner />
         </QueryProvider>
-      </OverlayProvider>
-    </SessionProvider>
+      </SessionProvider>
+    </OverlayProvider>
   )
 }
 

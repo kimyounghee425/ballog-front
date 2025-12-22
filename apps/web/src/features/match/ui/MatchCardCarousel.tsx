@@ -8,6 +8,7 @@ import {
 import type { CarouselApi } from '@/shared/ui/common/carousel'
 import type { Match } from '@/entities/match/model/match.type'
 import { useFlow } from '@/app/routes/stackflow'
+import { useSortMatchByBaseBallTeam } from '@/features/match/hooks/useSortMatchByBaseBallTeam'
 
 import { MatchCardFactory } from './MatchCardFactory'
 
@@ -17,6 +18,7 @@ interface MatchCardCarouselProps {
 
 export const MatchCardCarousel = ({ matches }: MatchCardCarouselProps) => {
   const { push } = useFlow()
+  const sortedMatches = useSortMatchByBaseBallTeam(matches)
 
   const [api, setApi] = useState<CarouselApi | null>(null)
   const [current, setCurrent] = useState(0)
@@ -51,7 +53,7 @@ export const MatchCardCarousel = ({ matches }: MatchCardCarouselProps) => {
       api.off('select', onSelect)
     }
   }, [api, matches.length])
-
+  
   return (
     <div className="pt-6 w-full">
       <Carousel
@@ -66,7 +68,7 @@ export const MatchCardCarousel = ({ matches }: MatchCardCarouselProps) => {
             aria-hidden="true"
           />
 
-          {matches.map((match, index) => (
+          {sortedMatches.map((match, index) => (
             <CarouselItem key={index} className="basis-3/5 pl-6">
               <MatchCardFactory
                 match={match}
