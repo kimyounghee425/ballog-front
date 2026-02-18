@@ -1,14 +1,14 @@
 import { useCallback, useEffect } from 'react'
 import { POST_MESSAGE_EVENT } from '@ballog/bridge'
 import type { ImageData } from '@ballog/bridge/types'
+import { CameraIcon } from '@ballog/asset/icons'
 
 import { useModal } from '@/shared/hooks/modal/useModal'
 import { useRecordingImages } from '@/features/record/hooks/useRecordImages'
 import { useWebViewBridgeListener } from '@/features/record/hooks/useWebViewBridgeListener'
 import { useImageUpload } from '@/features/image-management/hooks'
 import { useBridge } from '@/shared/hooks/bridge/useBridge'
-import CameraIcon from '@/assets/cameraIcon.svg?react'
-import RightArrow from '@/assets/rightArrow.svg?react'
+import RightArrow from '@/assets/RightArrow'
 import { cn } from '@/shared/lib/classnames'
 
 import { useImageUploadToast } from '../hooks/useImageUploadToast'
@@ -104,10 +104,10 @@ export const RecordCameraButton = ({
           </span>
         )}
       </div>
-      <span className="body-sm-medium text-usage-text-default">
+      <span className="text-center body-sm-medium text-usage-text-default">
         사진으로 이 순간 기록
       </span>
-      <RightArrow className="w-6 h-6" />
+      <RightArrow className="w-6 h-6 dark:text-brand-neutral-white light:text-neutral-500" />
     </button>
   )
 }

@@ -11,13 +11,17 @@ const MyPageInner = () => {
   return (
     <AppScreen
       appBar={{
-        title: <span className="flex text-usage-text-default">마이페이지</span>,
-        height: '48px',
+        title: (
+          <span className="flex text-usage-text-default body-md-bold">
+            마이페이지
+          </span>
+        ),
+        height: '44px',
       }}
     >
       <div className={cn('flex flex-col w-full px-4 py-4 pb-27.5')}>
         <div>
-          <p className="body-sm-bold text-brand-neutral-white mb-4">내 정보</p>
+          <p className="mb-4 body-sm-bold text-usage-text-default">내 정보</p>
           <ChangeMyInfoWidget />
         </div>
         <AlarmToggleList />

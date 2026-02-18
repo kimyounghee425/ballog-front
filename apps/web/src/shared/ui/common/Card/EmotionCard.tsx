@@ -1,8 +1,7 @@
-import { Pie, PieChart } from 'recharts'
+import { AngryEmotionNoShadow, JoyEmotionNoShadow } from '@ballog/asset/icons'
 import type { ComponentProps } from 'react'
+import { Pie, PieChart } from 'recharts'
 
-import AngryEmotion from '@/assets/angryEmotionNoShadow.svg?react'
-import JoyEmotion from '@/assets/joyEmotionNoShadow.svg?react'
 import { cn } from '@/shared/lib/classnames'
 
 interface EmotionPieChartData {
@@ -16,6 +15,43 @@ interface ActiveEmotionCardProps extends ComponentProps<'div'> {
 
 interface DisabledEmotionCardProps extends ComponentProps<'div'> {}
 
+const EmotionBadge = ({
+  emotion,
+  className,
+  ...rest
+}: {
+  emotion: '화나요' | '기뻐요'
+
+  className?: string
+}) => {
+  const isAngry = emotion === '화나요'
+  const emotionIcon = {
+    화나요: <AngryEmotionNoShadow className="w-5 h-5" />,
+    기뻐요: <JoyEmotionNoShadow className="w-5 h-5" />,
+  }
+
+  return (
+    <div
+      className={cn(
+        'flex flex-row justify-center items-center py-1 w-full rounded-md',
+        'gap-1 px-2',
+        isAngry ? 'bg-brand-red-disabled:' : 'bg-brand-green-disabled',
+        className,
+      )}
+      {...rest}
+    >
+      {emotionIcon[emotion]}
+      <span
+        className={cn(
+          'body-sm-bold ',
+          isAngry ? 'text-brand-red-hover' : 'text-brand-green-hover',
+        )}
+      >
+        {emotion}
+      </span>
+    </div>
+  )
+}
 /**
  * EmotionCard
  *
@@ -105,30 +141,16 @@ const Active = ({ data, className, ...rest }: ActiveEmotionCardProps) => {
           />
         </PieChart>
 
-        <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none body-sm-bold text-brand-neutral-white">
-          <div className="text-[23px]">{centerRate}%</div>
+        <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none body-sm-bold text-usage-text-default">
+          <div className="text-[23px] text-color-brand-neutral-white">
+            {centerRate}%
+          </div>
         </div>
       </div>
 
-      {centerEmotion === '화나요' ? (
-        <div
-          className={cn(
-            'flex flex-row justify-center items-center text-brand-red-default bg-brand-red-disabled py-1 px-2 rounded-md',
-          )}
-        >
-          <AngryEmotion className="w-5 h-5 mr-1" />
-          <span>{centerEmotion}</span>
-        </div>
-      ) : (
-        <div
-          className={cn(
-            'flex flex-row justify-center items-center text-brand-green-pressed bg-brand-green-disabled py-1 px-2 rounded-md',
-          )}
-        >
-          <JoyEmotion className="w-5 h-5 mr-1" />
-          <span>{centerEmotion}</span>
-        </div>
-      )}
+      <div className="mx-4">
+        <EmotionBadge emotion={centerEmotion} />
+      </div>
     </div>
   )
 }
@@ -147,12 +169,12 @@ const Disabled = ({ className, ...rest }: DisabledEmotionCardProps) => (
     <div className="flex items-center justify-center w-full h-full rounded-full bg-usage-background-strong">
       <div className="flex items-center justify-center gap-4 mt-4.25 text-brand-neutral-white min-w-30 min-h-30">
         <div className="flex flex-col items-center">
-          <AngryEmotion className="w-8 h-8" />
-          <p className="body-sm-bold">- %</p>
+          <AngryEmotionNoShadow className="w-8 h-8" />
+          <p className="body-sm-bold text-usage-text-default">- %</p>
         </div>
         <div className="flex flex-col items-center">
-          <JoyEmotion className="w-8 h-8" />
-          <p className="body-sm-bold">- %</p>
+          <JoyEmotionNoShadow className="w-8 h-8" />
+          <p className="body-sm-bold text-usage-text-default">- %</p>
         </div>
       </div>
     </div>

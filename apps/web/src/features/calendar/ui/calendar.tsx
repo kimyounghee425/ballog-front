@@ -3,13 +3,15 @@ import { ChevronDownIcon } from 'lucide-react'
 import { DayButton, DayPicker, getDefaultClassNames } from 'react-day-picker'
 import { ko } from 'date-fns/locale'
 import { format } from 'date-fns-tz'
+import {
+  CalendarLeftArrow as LeftArrow,
+  CalendarRightArrow as RightArrow,
+} from '@ballog/asset/icons'
 
 import type { MatchDateMap } from '@/entities/match/model/match.type'
 import { TIME_ZONE } from '@/shared/constants/time'
 import { cn } from '@/shared/lib/classnames'
 import { Button } from '@/shared/ui/common/Button/Button'
-import LeftArrow from '@/assets/calendarLeftArrow.svg?react'
-import RightArrow from '@/assets/calendarRightArrow.svg?react'
 
 function Calendar({
   className,
@@ -31,7 +33,7 @@ function Calendar({
       showOutsideDays={showOutsideDays}
       locale={ko}
       className={cn(
-        'bg-usage-background-strong group/calendar p-3 [--cell-size:--spacing(8)] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent',
+        'bg-usage-background-strong light:bg-usage-background-default group/calendar p-3 [--cell-size:--spacing(8)] [[data-slot=card-content]_&]:bg-transparent [[data-slot=popover-content]_&]:bg-transparent',
         String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
         String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180`,
         className,
@@ -83,11 +85,11 @@ function Calendar({
         ),
         table: 'w-full border-collapse border-none',
         weekdays: cn(
-          'flex border-b border-brand-neutral-50 pb-4',
+          'flex border-b border-brand-neutral-50 light:border-brand-neutral-20 pb-4',
           defaultClassNames.weekdays,
         ),
         weekday: cn(
-          'text-usage-text-default rounded-md flex-1 font-normal text-[15px] font-400 leading-[21px]',
+          'text-usage-text-default light:text-usage-text-subtle rounded-md flex-1 font-normal text-[15px] font-400 leading-[21px]',
           defaultClassNames.weekday,
         ),
         week: cn('flex w-full first:mt-0 mt-2 pt-1', defaultClassNames.week),
@@ -199,10 +201,11 @@ function CalendarDayButton({
         modifiers.selected
           ? '!bg-brand-primary-subtle text-[#17A093] border-brand-primary-default border-[1px]'
           : hasMatch
-            ? '!bg-usage-background-strong text-white'
-            : '!bg-usage-background-strong text-brand-neutral-40',
+            ? 'dark:bg-usage-background-strong light:bg-white text-usage-text-default'
+            : 'dark:bg-usage-background-strong light:bg-white text-brand-neutral-40',
 
-        modifiers.outside && 'text-brand-neutral-70',
+        modifiers.outside &&
+          'text-brand-neutral-70 light:text-brand-neutral-40',
         modifiers.today && !modifiers.selected && defaultClassNames.day,
         className,
       )}
